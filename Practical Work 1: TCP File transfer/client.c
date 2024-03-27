@@ -6,6 +6,19 @@
 
 #define BUF_SIZE 1024
 
+void send_file(FILE *fp, int sockfd) {
+  int n;
+  char data[BUF_SIZE] = {0};
+ 
+  while(fgets(data, BUF_SIZE, fp) != NULL) {
+    if (send(sockfd, data, sizeof(data), 0) == -1) {
+      perror("[-]Error in sending file.");
+      exit(1);
+    }
+    bzero(data, BUF_SIZE);
+  }
+}
+
 int main() {
 	// Define IP address and port - server
 	char *ip = "127.0.0.1";
@@ -14,6 +27,8 @@ int main() {
 
 	int sockfd; // Socket file descriptor
 	struct sockaddr_in server_addr; // Server address structure
+	FILE *fp; // File pointer
+	char *filename = "send.txt"; // File name
 
 	// Create socket
 	sockfd = socket(AF_INET, SOCK_STREAM, 0);
@@ -36,6 +51,21 @@ int main() {
 		exit(1);
 	}
 	printf("[+]Connected to Server.\n");
+
+	// Open file
+	fp = fopen(filename, "r");
+	if (fp == NULL) {
+		perror("[-]Error in reading file.");
+		exit(1);
+	}
+
+	// Send file
+	send_file(fp, sockfd);
+	printf("[+]File data sent successfully.\n");
+
+	// Close the connection
+	printf("[+]Closing the connection.\n");
+	close(sockfd);
 
 	return 0;
 }

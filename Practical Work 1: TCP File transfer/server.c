@@ -5,6 +5,25 @@
 
 #define BUF_SIZE 1024
 
+void write_file(int sockfd){
+  int n;
+  FILE *fp;
+  char *filename = "received.txt";
+  char buffer[BUF_SIZE];
+ 
+  fp = fopen(filename, "w");
+  while (1) {
+    n = recv(sockfd, buffer, BUF_SIZE, 0);
+    if (n <= 0){
+      break;
+      return;
+    }
+    fprintf(fp, "%s", buffer);
+    bzero(buffer, BUF_SIZE);
+  }
+  return;
+}
+
 int main() {
 	// Define IP address and port - server
 	char *ip = "127.0.0.1";
@@ -49,6 +68,10 @@ int main() {
 	addr_size = sizeof(new_addr);
 	int new_sock = accept(sockfd, (struct sockaddr*)&new_addr, &addr_size);
 	printf("[+]Connection accepted from %s:%d\n", inet_ntoa(new_addr.sin_addr), ntohs(new_addr.sin_port));
+
+	// Write file
+	write_file(new_sock);
+	printf("[+]Data written in the file successfully.\n");
 
 	return 0;
 	}
