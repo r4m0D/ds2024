@@ -11,4 +11,4 @@ Student Info
 
 * Student Name: Lê Vũ Hoàng Linh
 * Student ID: BI12-243
-* Student Group ID: Not-for-now
+* Student Group ID: 1
