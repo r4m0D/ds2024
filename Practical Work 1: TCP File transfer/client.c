@@ -58,6 +58,7 @@ int main() {
 		perror("[-]Error in reading file.");
 		exit(1);
 	}
+	printf("[+]File opened successfully.\n");
 
 	// Send file
 	send_file(fp, sockfd);

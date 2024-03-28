@@ -1,0 +1,53 @@
+\documentclass[12pt]{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{array}
+\usepackage{float}
+\usepackage{enumitem}
+\usepackage{comment}
+\usepackage{tocloft}
+\usepackage{subcaption}
+\usepackage{geometry}
+\usepackage{setspace}
+\usepackage{url}
+\usepackage{natbib}
+\usepackage{hyperref}
+\usepackage{natbib}
+\renewcommand{\cite}[1]{\textsuperscript{\citep{#1}}}
+
+\hypersetup{
+    colorlinks = false, % Keeps the links as black text
+    pdfborder = {0 0 0}, % Sets the border of the links to be invisible
+}
+
+\setlength{\parskip}{0.25\baselineskip} % Adjust the value to control paragraph spacing
+\setlength{\parindent}{0pt} % Remove paragraph indentation
+\setstretch{0.9} % Ajust the value to control line spacing
+
+\setlist[itemize]{itemsep=2pt, topsep=0mm, partopsep=0mm}
+\setcounter{tocdepth}{5}
+\begin{document}
+
+\bibliographystyle{unsrt}
+
+\input{title}
+
+\thispagestyle{empty}
+
+\tableofcontents
+
+\newpage
+\pagenumbering{arabic}
+\setcounter{page}{1} 
+
+\input{sections/introduction}
+\input{sections/protocol_design}
+\input{sections/system_organization}
+\input{sections/file_transfer_implementation}
+\input{sections/conclusion}
+
+\newpage
+\bibliographystyle{plain}
+\bibliography{references}
+
+
+\end{document}

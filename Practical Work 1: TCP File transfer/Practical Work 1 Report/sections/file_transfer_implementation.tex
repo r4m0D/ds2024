@@ -1,0 +1,51 @@
+\section{File transfer implementation}
+
+\subsection{Socket Creation}
+
+Both the client and the server start by creating a TCP socket using the \verb|socket()| function. This socket acts as an endpoint for communication.
+\begin{verbatim}
+    sockfd = socket(AF_INET, SOCK_STREAM, 0);
+\end{verbatim}
+
+\subsection{Connection Setup (Client) / Binding and Listening (Server)}
+
+\subsubsection{Connection Setup (Client)}
+
+The client uses the \verb|connect()| function to establish a connection to the server.
+\begin{verbatim}
+    e = connect(sockfd, (struct sockaddr*)&server_addr, sizeof(server_addr));
+\end{verbatim}
+
+\subsubsection{Binding and Listening (Server)}
+
+The server uses \verb|bind()| to bind the socket to an IP address and port, and listen() to start listening for incoming connections.
+\begin{verbatim}
+    e = bind(sockfd, (struct sockaddr*)&server_addr, sizeof(server_addr));
+    listen(sockfd, 10);
+\end{verbatim}
+
+\subsection{Accepting Connections (Server)}
+
+The server accepts an incoming connection using \verb|accept()|, which returns a new socket file descriptor for the established connection.
+\begin{verbatim}
+    int new_sock = accept(sockfd, (struct sockaddr*)&new_addr, &addr_size);
+\end{verbatim}
+
+\subsection{File Transfer (Client)}
+
+Before sending the file, the client opens the file using \verb|fopen()| and then sends the file's data in chunks using a while loop and the \verb|send()| function.
+\begin{verbatim}
+    fp = fopen(filename, "r");
+    send_file(fp, sockfd);
+\end{verbatim}
+
+\subsection{File Reception and Writing (Server)}
+
+The server receives the data in chunks using a while loop and the \verb|recv()| function, writing each chunk to the file using \verb|fprintf()|.
+\begin{verbatim}
+    write_file(new_sock);
+\end{verbatim}
+
+\subsection{Closing the Connection}
+
+Finally, after the file transfer is complete, both the client close the respective socket descriptors with \verb|close()|.

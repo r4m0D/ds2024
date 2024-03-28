@@ -5,7 +5,7 @@
 
 #define BUF_SIZE 1024
 
-void write_file(int sockfd){
+void write_file(int sockfd) {
   int n;
   FILE *fp;
   char *filename = "received.txt";
@@ -71,7 +71,7 @@ int main() {
 
 	// Write file
 	write_file(new_sock);
-	printf("[+]Data written in the file successfully.\n");
+	printf("[+]File data received!\n");
 
 	return 0;
 	}
